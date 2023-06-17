@@ -9,7 +9,7 @@ namespace BookStore.Application.Common.Interfaces.Persistence
     {
         Task<T> Add(T entity);
         Task<T> GetById(Guid Id);
-        Task<List<T>> GetByAll(Guid Id);
+        Task<List<T>> GetByAll();
         Task<T> Update(T entity);
         Task<T> Remove(T entity);
     }
