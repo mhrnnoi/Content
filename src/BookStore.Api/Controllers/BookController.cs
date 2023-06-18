@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BookStore.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class BookController : ControllerBase
     {
         private readonly IMediator _mediator;

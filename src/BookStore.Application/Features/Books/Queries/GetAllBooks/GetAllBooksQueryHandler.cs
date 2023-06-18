@@ -10,10 +10,12 @@ namespace BookStore.Application.Features.Books.Queries.GetAllBooks
     {
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
+        
         public GetAllBooksQueryHandler(IMapper mapper, IBookRepository bookRepository)
         {
             _mapper = mapper;
             _bookRepository = bookRepository;
+            
         }
         public async Task<List<BookDTO>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
         {

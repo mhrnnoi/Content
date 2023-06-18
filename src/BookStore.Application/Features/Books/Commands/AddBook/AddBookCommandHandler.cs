@@ -11,11 +11,13 @@ namespace BookStore.Application.Features.Books.Commands.AddBook
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AddBookCommandHandler(IBookRepository bookRepository, IMapper mapper)
+        public AddBookCommandHandler(IBookRepository bookRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -23,6 +25,7 @@ namespace BookStore.Application.Features.Books.Commands.AddBook
         {
             var book = _mapper.Map<Book>(request);
             await _bookRepository.Add(book);
+            await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<BookDTO>(request);
         }
     }

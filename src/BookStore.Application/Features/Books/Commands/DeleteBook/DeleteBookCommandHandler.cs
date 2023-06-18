@@ -11,8 +11,10 @@ namespace BookStore.Application.Features.Books.Commands.DeleteBook
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
-        public DeleteBookCommandHandler(IBookRepository bookRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public DeleteBookCommandHandler(IBookRepository bookRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
             _bookRepository = bookRepository;
             _mapper = mapper;
         }
@@ -20,7 +22,8 @@ namespace BookStore.Application.Features.Books.Commands.DeleteBook
         {
             var book = _mapper.Map<Book>(request);
             var bookDto = _mapper.Map<BookDTO>(request);
-            await _bookRepository.Remove(book);
+            _bookRepository.Remove(book);
+            await _unitOfWork.SaveChangesAsync();
             return bookDto;
 
         }
