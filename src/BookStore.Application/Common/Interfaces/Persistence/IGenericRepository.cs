@@ -7,10 +7,10 @@ namespace BookStore.Application.Common.Interfaces.Persistence
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task Add(T entity);
-        Task<T> GetById(Guid Id);
-        Task<List<T>> GetByAll();
-        Task Update(T entity);
-        Task Remove(Guid Id);
+        Task AddAsync(T entity);
+        Task<T> GetByIdAsync(Guid Id);
+        Task<List<T>> GetByAllAsync();
+        Task UpdateAsync(T entity);
+        Task RemoveAsync(Guid Id);
     }
 }

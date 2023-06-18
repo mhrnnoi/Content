@@ -21,7 +21,7 @@ namespace BookStore.Application.Features.Books.Commands.DeleteBook
         public async Task<string> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
             
-            await _bookRepository.Remove(request.Id);
+            await _bookRepository.RemoveAsync(request.Id);
             await _unitOfWork.SaveChangesAsync();
             return "Deleted succesfuly";
 

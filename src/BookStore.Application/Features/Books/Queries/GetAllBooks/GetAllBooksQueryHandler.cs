@@ -20,7 +20,7 @@ namespace BookStore.Application.Features.Books.Queries.GetAllBooks
         }
         public async Task<List<BookDTO>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
         {
-            var books =  await _bookRepository.GetByAll();
+            var books =  await _bookRepository.GetByAllAsync();
             var booksDto = _mapper.Map<List<BookDTO>>(books);
             await _unitOfWork.SaveChangesAsync();
             return booksDto;

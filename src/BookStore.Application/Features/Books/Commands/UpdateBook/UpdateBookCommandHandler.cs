@@ -21,7 +21,7 @@ namespace BookStore.Application.Features.Books.Commands.UpdateBook
         public async Task<BookDTO> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
             var book =  _mapper.Map<Book>(request);
-            await _bookRepository.Update(book);
+            await _bookRepository.UpdateAsync(book);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<BookDTO>(request);
 

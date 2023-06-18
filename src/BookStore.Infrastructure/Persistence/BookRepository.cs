@@ -21,21 +21,21 @@ namespace BookStore.Infrastructure.Persistence
             _mapper = mapper;
         }
 
-        public async Task Add(Book entity)
+        public async Task AddAsync(Book entity)
         {
             await _context.Set<Book>().AddAsync(entity);
         }
 
-        public async Task<List<Book>> GetByAll()
+        public async Task<List<Book>> GetByAllAsync()
         {
             return await _context.Set<Book>().ToListAsync();
 
         }
 
-        public async Task<Book> GetById(Guid Id)
+        public async Task<Book> GetByIdAsync(Guid id)
         {
 
-            var book = await _context.Set<Book>().SingleOrDefaultAsync(x => x.Id == Id) ?? null;
+            var book = await _context.Set<Book>().SingleOrDefaultAsync(x => x.Id == id) ?? null;
             if (book != null)
             {
                 return book;
@@ -45,7 +45,7 @@ namespace BookStore.Infrastructure.Persistence
 
         }
 
-        public async Task Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             var book = await _context.Set<Book>().SingleOrDefaultAsync(x => x.Id == id) ?? null;
             if (book == null)
@@ -60,7 +60,7 @@ namespace BookStore.Infrastructure.Persistence
 
         }
 
-        public async Task Update(Book entity)
+        public async Task UpdateAsync(Book entity)
         {
             var oldBook = await _context.Set<Book>().SingleOrDefaultAsync(x => x.Id == entity.Id) ?? null;
             if (oldBook != null)

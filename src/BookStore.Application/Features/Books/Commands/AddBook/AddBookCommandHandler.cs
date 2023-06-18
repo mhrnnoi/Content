@@ -24,7 +24,7 @@ namespace BookStore.Application.Features.Books.Commands.AddBook
         public async Task<BookDTO> Handle(AddBookCommand request, CancellationToken cancellationToken)
         {
             var book = _mapper.Map<Book>(request);
-            await _bookRepository.Add(book);
+            await _bookRepository.AddAsync(book);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<BookDTO>(request);
         }

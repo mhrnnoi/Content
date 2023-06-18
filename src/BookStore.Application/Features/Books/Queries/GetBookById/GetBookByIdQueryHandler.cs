@@ -25,7 +25,7 @@ namespace BookStore.Application.Features.Books.Queries.GetBookById
 
         public async Task<BookDTO> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
         {
-            var book = await _bookRepository.GetById(request.Id);
+            var book = await _bookRepository.GetByIdAsync(request.Id);
             
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<BookDTO>(book);
