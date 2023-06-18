@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer()
                     .AddApplication()
-                    .AddInfruscture(builder.Configuration.GetConnectionString("DefaultConnection")  ?? "DefaultConnection")
+                    .AddInfruscture(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("database failure"))
                     .AddSwaggerGen();
 
 }

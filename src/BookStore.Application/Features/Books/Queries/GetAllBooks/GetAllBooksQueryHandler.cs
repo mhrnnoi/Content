@@ -10,17 +10,19 @@ namespace BookStore.Application.Features.Books.Queries.GetAllBooks
     {
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
-        
-        public GetAllBooksQueryHandler(IMapper mapper, IBookRepository bookRepository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public GetAllBooksQueryHandler(IMapper mapper, IBookRepository bookRepository, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _bookRepository = bookRepository;
-            
+            _unitOfWork = unitOfWork;
         }
         public async Task<List<BookDTO>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
         {
             var books =  await _bookRepository.GetByAll();
             var booksDto = _mapper.Map<List<BookDTO>>(books);
+            await _unitOfWork.SaveChangesAsync();
             return booksDto;
         }
     }

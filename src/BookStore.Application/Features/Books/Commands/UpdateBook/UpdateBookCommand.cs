@@ -7,6 +7,6 @@ using MediatR;
 
 namespace BookStore.Application.Features.Books.Commands.UpdateBook
 {
-    public record UpdateBookCommand(string Title, string AuthorName, DateTime PublishedDate) : IRequest<BookDTO>;
+    public record UpdateBookCommand(Guid Id, string Title, string AuthorName, DateTime PublishedDate) : IRequest<BookDTO>;
     
 }

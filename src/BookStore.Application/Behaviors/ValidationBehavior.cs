@@ -7,7 +7,7 @@ namespace BookStore.Application.Behaviors
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> 
     {
         private readonly IValidator<TRequest> _validator;
-                private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ValidationBehavior(IValidator<TRequest> validator, IUnitOfWork unitOfWork)
         {

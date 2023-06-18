@@ -7,6 +7,6 @@ using MediatR;
 
 namespace BookStore.Application.Features.Books.Commands.DeleteBook
 {
-    public record DeleteBookCommand(string Title, string AuthorName, DateTime PublishedDate) : IRequest<BookDTO>;
+    public record DeleteBookCommand(Guid Id) : IRequest<string>;
     
 }

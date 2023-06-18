@@ -28,7 +28,7 @@ namespace BookStore.Api.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> AddBook(CUDBookRequest request)
+        public async Task<IActionResult> AddBook([FromBody] AddBookRequest request)
         {
             var command = _mapper.Map<AddBookCommand>(request);
 
@@ -38,9 +38,9 @@ namespace BookStore.Api.Controllers
 
         }
         [HttpGet]
-        public async Task<IActionResult> GetBookById(GetBookByIdRequest request)
+        public async Task<IActionResult> GetBookById([FromQuery] Guid Id)
         {
-            var query = new GetBookByIdQuery(request.id);
+            var query = new GetBookByIdQuery(Id);
             var result = await _mediator.Send(query);
             return Ok(result);
 
@@ -56,7 +56,7 @@ namespace BookStore.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateBook(CUDBookRequest request)
+        public async Task<IActionResult> UpdateBook([FromBody] UpdateBookRequest request)
         {
             var command = _mapper.Map<UpdateBookCommand>(request);
 
@@ -65,9 +65,9 @@ namespace BookStore.Api.Controllers
 
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteBook(CUDBookRequest request)
+        public async Task<IActionResult> DeleteBook([FromQuery] Guid Id)
         {
-            var command = _mapper.Map<DeleteBookCommand>(request);
+            var command = new DeleteBookCommand(Id);
 
             var result = await _mediator.Send(command);
             return Ok(result);

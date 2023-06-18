@@ -7,7 +7,7 @@ using MediatR;
 
 namespace BookStore.Application.Features.Books.Commands.DeleteBook
 {
-    public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, BookDTO>
+    public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, string>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
@@ -18,14 +18,16 @@ namespace BookStore.Application.Features.Books.Commands.DeleteBook
             _bookRepository = bookRepository;
             _mapper = mapper;
         }
-        public async Task<BookDTO> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
-            var book = _mapper.Map<Book>(request);
-            var bookDto = _mapper.Map<BookDTO>(request);
-            _bookRepository.Remove(book);
+            
+            await _bookRepository.Remove(request.Id);
             await _unitOfWork.SaveChangesAsync();
-            return bookDto;
+            return "Deleted succesfuly";
+
 
         }
+
+
     }
 }

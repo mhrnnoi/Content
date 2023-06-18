@@ -9,7 +9,9 @@ namespace BookStore.Application.Features.Books.Queries.GetBookById
     {
         public GetBookByIdQueryValidator( )
         {
-            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Id).NotNull().WithMessage("plz enter id");
+            RuleFor(x => x.Id).NotEmpty().WithMessage("plz enter id");
+            RuleFor(x => x.Id.ToString().Length).GreaterThanOrEqualTo(30).WithMessage("plz enter valid id");
             
             
         }

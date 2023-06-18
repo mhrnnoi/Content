@@ -25,10 +25,6 @@ namespace BookStore.Infrastructure
 
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            var config = TypeAdapterConfig.GlobalSettings;
-            config.Scan(Assembly.GetExecutingAssembly());
-            services.AddSingleton(config);
-            services.AddScoped<IMapper, ServiceMapper>();
 
             return services;
         }

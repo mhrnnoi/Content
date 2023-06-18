@@ -11,6 +11,6 @@ namespace BookStore.Application.Common.Interfaces.Persistence
         Task<T> GetById(Guid Id);
         Task<List<T>> GetByAll();
         Task Update(T entity);
-        void Remove(T entity);
+        Task Remove(Guid Id);
     }
 }

@@ -13,18 +13,21 @@ namespace BookStore.Application.Features.Books.Queries.GetBookById
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GetBookByIdQueryHandler(IBookRepository bookRepository, IMapper mapper)
+        public GetBookByIdQueryHandler(IBookRepository bookRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
 
         public async Task<BookDTO> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
         {
             var book = await _bookRepository.GetById(request.Id);
-
+            
+            await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<BookDTO>(book);
         }
     }
