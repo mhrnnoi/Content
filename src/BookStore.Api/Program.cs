@@ -1,4 +1,5 @@
 using BookStore.Application;
+using BookStore.Application.Mapping;
 using BookStore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
