@@ -14,11 +14,13 @@ namespace BookStore.Infrastructure.Persistence
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BookRepository(ApplicationDbContext context, IMapper mapper)
+        public BookRepository(ApplicationDbContext context, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _context = context;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task AddAsync(Book entity)
@@ -40,6 +42,7 @@ namespace BookStore.Infrastructure.Persistence
             {
                 return book;
             }
+            await _unitOfWork.DisposeAsync();
             throw new NullReferenceException("there is no book with this id");
 
 
@@ -47,12 +50,8 @@ namespace BookStore.Infrastructure.Persistence
 
         public async Task RemoveAsync(Guid id)
         {
-            var book = await _context.Set<Book>().SingleOrDefaultAsync(x => x.Id == id) ?? null;
-            if (book == null)
-            {
-            throw new NullReferenceException("there is no book with this id");
-                
-            }
+            var book = await GetByIdAsync(id);
+
             _context.Set<Book>().Remove(book);
 
 
@@ -62,13 +61,13 @@ namespace BookStore.Infrastructure.Persistence
 
         public async Task UpdateAsync(Book entity)
         {
-            var oldBook = await _context.Set<Book>().SingleOrDefaultAsync(x => x.Id == entity.Id) ?? null;
-            if (oldBook != null)
-            {
-                _context.Set<Book>().Remove(oldBook);
-            }
+            var oldBook = await GetByIdAsync(entity.Id);
+            _context.Entry(oldBook).State = EntityState.Detached;
+            await RemoveAsync(oldBook.Id);
+            _context.Entry(oldBook).State = EntityState.Detached;
             var newBook = _mapper.Map<Book>(entity);
-            await _context.Set<Book>().AddAsync(newBook);
+            await AddAsync(newBook);
+
 
         }
     }

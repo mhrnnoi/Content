@@ -23,8 +23,8 @@ namespace BookStore.Infrastructure
                 cfg.UseNpgsql(connectionString);
             });
 
-            services.AddTransient<IBookRepository, BookRepository>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

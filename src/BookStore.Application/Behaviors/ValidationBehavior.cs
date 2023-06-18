@@ -4,7 +4,7 @@ using MediatR;
 
 namespace BookStore.Application.Behaviors
 {
-    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> 
+    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IValidator<TRequest> _validator;
         private readonly IUnitOfWork _unitOfWork;
@@ -21,14 +21,21 @@ namespace BookStore.Application.Behaviors
 
             if (result.IsValid)
             {
-                await next();
+                return await next();
             }
-            await _unitOfWork.DisposeAsync();
-            var errors = string.Join(" ,\n", result.Errors.Select(x => x.ErrorMessage));
-            throw new Exception(errors);
+            else
+            {
+                await _unitOfWork.DisposeAsync();
+                var errors = string.Join(" ,\n", result.Errors.Select(x => x.ErrorMessage));
+                throw new Exception(errors);
+            }
+
+
+
+
 
         }
 
-        
+
     }
 }
